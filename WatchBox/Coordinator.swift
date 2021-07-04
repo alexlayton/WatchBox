@@ -31,7 +31,7 @@ class Coordinator {
             guard error == nil else {
                 fatalError("Failed to load persistent store - \(error!.localizedDescription)")
             }
-            let _ = try? dataStore.seed()
+//            let _ = try? dataStore.seed()
             self.presentInitialViewController()
         }
     }

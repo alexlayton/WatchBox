@@ -24,6 +24,8 @@ class FavouritesViewModel: NSObject {
     
     private var hasLoaded = false
     
+    @Published var isEmpty = true
+    
     // MARK: Initializers
     
     init(dataStore: WatchBoxStore) {
@@ -36,10 +38,6 @@ class FavouritesViewModel: NSObject {
         assert(dataSource != nil, "fetchFavourites() called before assigning dataSource")
         do {
             try fetchedResultsController.performFetch()
-//            var snapshot = FavouritesSnapshot()
-//            snapshot.appendSections([.all])
-//            snapshot.appendItems(fetchedResultsController.fetchedObjects ?? [], toSection: .all)
-//            dataSource?.apply(snapshot, animatingDifferences: false)
         } catch {
             print("Failed to fetch films - \(error.localizedDescription)")
         }
@@ -47,6 +45,15 @@ class FavouritesViewModel: NSObject {
     
     func film(at indexPath: IndexPath) -> FilmEntity? {
         return fetchedResultsController.fetchedObjects?[indexPath.row]
+    }
+    
+    func deleteAll() {
+        do {
+            try dataStore.deleteAll()
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("Error deleting all films - \(error.localizedDescription)")
+        }
     }
     
     private func createFetchedResultsController() -> NSFetchedResultsController<FilmEntity> {
@@ -68,6 +75,8 @@ extension FavouritesViewModel: NSFetchedResultsControllerDelegate {
         let snapshot = snapshot as NSDiffableDataSourceSnapshot<String, NSManagedObjectID>
         
         let films = snapshot.itemIdentifiers.compactMap { self.dataStore.viewContext.object(with: $0) as? FilmEntity }
+        
+        isEmpty = films.count == 0
         
         var favouritesSnapshot = FavouritesSnapshot()
         favouritesSnapshot.appendSections([.all])

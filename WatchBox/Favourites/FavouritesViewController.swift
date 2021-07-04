@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Combine
+import SwiftUI
 
 typealias FavouritesDataSource = UICollectionViewDiffableDataSource<FavouritesViewController.Section, FilmEntity>
 
@@ -29,9 +30,11 @@ class FavouritesViewController: UIViewController {
     
     var filmHandler: FilmHandler?
     
+    private var emptyView: UIView?
+    
     private lazy var dataSource: FavouritesDataSource = createDataSource()
     
-    private let cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: Outlets
     
@@ -42,15 +45,41 @@ class FavouritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel?.dataSource = dataSource
-        
+        configureViews()
+        configureBindings()
         configureSearchController()
         configureCollectionView()
         
+        viewModel?.dataSource = dataSource
         viewModel?.fetchFavourites()
     }
     
     // MARK: -
+    
+    private func configureViews() {
+        let hostingController = UIHostingController(rootView: EmptyView())
+        guard let emptyView = hostingController.view else {
+            return
+        }
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emptyView)
+        NSLayoutConstraint.activate([
+            emptyView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            emptyView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            emptyView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            emptyView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        self.emptyView = emptyView
+    }
+    
+    private func configureBindings() {
+        viewModel?.$isEmpty
+            .receive(on: DispatchQueue.main)
+            .sink { isEmpty in
+                self.emptyView?.isHidden = !isEmpty
+            }
+            .store(in: &cancellables)
+    }
     
     private func configureCollectionView() {
         let layout = collectionView.collectionViewLayout as? FilmsLayout
@@ -76,7 +105,18 @@ class FavouritesViewController: UIViewController {
             return cell
         }
     }
-
+    
+    // MARK: Actions
+    
+    @IBAction func deleteTapped(_ sender: Any) {
+        let alertController = UIAlertController(title: "Delete all", message: "Are you sure you want to delete all films?", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+            self.viewModel?.deleteAll()
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alertController, animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: UICollectionViewDelegate

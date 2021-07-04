@@ -41,5 +41,11 @@ final class WatchBoxStore: NSPersistentContainer {
         try viewContext.save()
     }
     
+    func deleteAll() throws {
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: FilmEntity.fetchRequest())
+        try viewContext.execute(deleteRequest)
+        try viewContext.save()
+    }
+    
 }
 

@@ -47,7 +47,13 @@
                             <constraint firstItem="Gfp-pb-QmN" firstAttribute="top" secondItem="vYt-iy-ShQ" secondAttribute="top" id="taY-Ja-h4B"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="WatchBox" id="AWL-Bg-mfq"/>
+                    <navigationItem key="navigationItem" title="WatchBox" id="AWL-Bg-mfq">
+                        <barButtonItem key="leftBarButtonItem" systemItem="trash" id="k6V-35-kVt">
+                            <connections>
+                                <action selector="deleteTapped:" destination="ERW-Ir-aCw" id="1qu-Tl-X9y"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="collectionView" destination="Gfp-pb-QmN" id="X1I-Q5-9FE"/>
