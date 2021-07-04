@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20E5217a" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FilmEntity" representedClassName="FilmEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="actors" attributeType="String" defaultValueString=""/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="imdbID" attributeType="String" defaultValueString=""/>
+        <attribute name="modifiedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="plot" attributeType="String" defaultValueString=""/>
+        <attribute name="posterURL" attributeType="String" defaultValueString=""/>
+        <attribute name="title" attributeType="String" defaultValueString=""/>
+        <attribute name="year" attributeType="String" defaultValueString=""/>
+    </entity>
+    <elements>
+        <element name="FilmEntity" positionX="-63" positionY="-18" width="128" height="149"/>
+    </elements>
+</model>
