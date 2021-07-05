@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		FA0B1DF12693895A003630F2 /* WatchBoxStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0B1DF02693895A003630F2 /* WatchBoxStoreTests.swift */; };
+		FA0B1DF9269399AF003630F2 /* WatchBoxTestsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0B1DF8269399AF003630F2 /* WatchBoxTestsUtils.swift */; };
+		FA0B1DFD2693A285003630F2 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0B1DFC2693A285003630F2 /* SearchViewModelTests.swift */; };
 		FAB9B42D268F047700CF3344 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB9B42C268F047700CF3344 /* AppDelegate.swift */; };
 		FAB9B42F268F047700CF3344 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB9B42E268F047700CF3344 /* SceneDelegate.swift */; };
 		FAB9B434268F047700CF3344 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAB9B432268F047700CF3344 /* Main.storyboard */; };
@@ -52,6 +54,8 @@
 
 /* Begin PBXFileReference section */
 		FA0B1DF02693895A003630F2 /* WatchBoxStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchBoxStoreTests.swift; sourceTree = "<group>"; };
+		FA0B1DF8269399AF003630F2 /* WatchBoxTestsUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchBoxTestsUtils.swift; sourceTree = "<group>"; };
+		FA0B1DFC2693A285003630F2 /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
 		FAB9B429268F047700CF3344 /* WatchBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAB9B42C268F047700CF3344 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAB9B42E268F047700CF3344 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -222,6 +226,8 @@
 			children = (
 				FAB9B49F26921B7300CF3344 /* WatchBoxTests.swift */,
 				FA0B1DF02693895A003630F2 /* WatchBoxStoreTests.swift */,
+				FA0B1DFC2693A285003630F2 /* SearchViewModelTests.swift */,
+				FA0B1DF8269399AF003630F2 /* WatchBoxTestsUtils.swift */,
 				FAB9B4A126921B7300CF3344 /* Info.plist */,
 			);
 			path = WatchBoxTests;
@@ -361,6 +367,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB9B4A026921B7300CF3344 /* WatchBoxTests.swift in Sources */,
+				FA0B1DF9269399AF003630F2 /* WatchBoxTestsUtils.swift in Sources */,
+				FA0B1DFD2693A285003630F2 /* SearchViewModelTests.swift in Sources */,
 				FA0B1DF12693895A003630F2 /* WatchBoxStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

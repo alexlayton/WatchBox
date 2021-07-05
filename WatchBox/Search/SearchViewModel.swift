@@ -14,7 +14,7 @@ final class SearchViewModel {
     
     // MARK: Properties
     
-    let client = OMDBClient()
+    let provider: OMDBProvider
     
     let dataStore: WatchBoxStore
     
@@ -28,7 +28,8 @@ final class SearchViewModel {
     
     // MARK: Initializers
     
-    init(dataStore: WatchBoxStore) {
+    init(provider: OMDBProvider, dataStore: WatchBoxStore) {
+        self.provider = provider
         self.dataStore = dataStore
         configureBindings()
     }
@@ -51,7 +52,7 @@ final class SearchViewModel {
         let apiRequest = debouncedSearchText
             .filter { $0 != "" }
             .map { TitleRequest(title: $0) }
-            .flatMap { self.client.titleSearch(request: $0) }
+            .flatMap { self.provider.titleSearch(request: $0) }
             .map { Optional($0) }
             .catch { error -> Just<OMDBResponse?> in
                 print("Error fetching from API - \(error.localizedDescription)")

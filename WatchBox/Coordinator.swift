@@ -58,7 +58,7 @@ class Coordinator {
         guard let viewController = storyboard.instantiateViewController(identifier: SearchViewController.storyboardIdentifier) as? SearchViewController else {
             fatalError("Failed to instantiate search view controller")
         }
-        viewController.viewModel = SearchViewModel(dataStore: dataStore)
+        viewController.viewModel = SearchViewModel(provider: OMDBClient(), dataStore: dataStore)
         viewController.filmHandler = { [unowned self] film in
             self.pushFilmViewController(film: film)
         }

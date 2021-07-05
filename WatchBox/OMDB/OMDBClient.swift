@@ -13,7 +13,11 @@ enum OMDBError: Error {
     case invalidResponse
 }
 
-struct OMDBClient {
+protocol OMDBProvider {
+    func titleSearch(request: TitleRequest) -> AnyPublisher<OMDBResponse, Error>
+}
+
+struct OMDBClient: OMDBProvider {
     
     private static let baseURLString = "http://www.omdbapi.com"
     

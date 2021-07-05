@@ -48,6 +48,7 @@ struct FilmView: View {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
+                    .padding([.top])
             }
             ScrollView {
                 filmDetails
