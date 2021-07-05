@@ -11,28 +11,76 @@ import UIKit
 
 struct FilmView: View {
     
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    
     let film: Film
     
     let image: UIImage?
     
+    @State var rating: Int
+    
+    var ratingHandler: ((Int) -> ())?
+    
+    init(film: Film, image: UIImage? = nil, initialRating: Int = 0, ratingHandler: ((Int) -> ())? = nil) {
+        self.film = film
+        self.image = image
+        self._rating = State(initialValue: initialRating)
+        self.ratingHandler = ratingHandler
+    }
+    
     var body: some View {
+        filmView
+            .onChange(of: rating) { value in
+                ratingHandler?(value)
+            }
+    }
+    
+    var filmView: AnyView {
+        if horizontalSizeClass == .compact {
+            return AnyView(verticalLayout)
+        }
+        return AnyView(horizontalLayout)
+    }
+    
+    var horizontalLayout: some View {
+        HStack {
+            if let image = image {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+            }
+            ScrollView {
+                filmDetails
+                    .padding()
+            }
+        }
+    }
+    
+    var verticalLayout: some View {
         ScrollView {
-            VStack(spacing: 16.0) {
+            VStack {
                 if let image = image {
                     Image(uiImage: image)
                 }
-                HStack(alignment: .center) {
-                    Text(film.title)
-                        .font(.largeTitle)
-                    Text(film.year)
-                }
-                Text(film.plot)
-                    .font(.headline)
-                    .multilineTextAlignment(.center)
-                Text(film.actors)
-                    .font(.subheadline)
-                    .multilineTextAlignment(.center)
+                filmDetails
             }
+            .padding()
+        }
+    }
+    
+    var filmDetails: some View {
+        VStack(spacing: 8.0) {
+            Text(film.title)
+                .font(.largeTitle)
+                .lineLimit(/*@START_MENU_TOKEN@*/2/*@END_MENU_TOKEN@*/)
+            Text(film.year)
+            RatingView(rating: $rating)
+            Text(film.plot)
+                .font(.headline)
+                .multilineTextAlignment(.center)
+            Text(film.actors)
+                .font(.subheadline)
+                .multilineTextAlignment(.center)
         }
     }
     
@@ -46,7 +94,7 @@ struct FilmView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            FilmView(film: film, image: image)
+            FilmView(film: film, image: image, initialRating: 5)
         }
     }
 }

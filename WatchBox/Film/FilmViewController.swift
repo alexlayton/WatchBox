@@ -29,32 +29,39 @@ class FilmViewController: UIViewController {
         
         setupViews()
         
-        if let film = viewModel?.film.film {
-            let filmView = FilmView(film: film, image: nil)
-            hostingController?.rootView = filmView
+        guard let viewModel = viewModel else {
+            return
         }
-        
-        navigationItem.title = viewModel?.film.title
+        let film = viewModel.filmEntity.film
+        let filmView = FilmView(film: film,
+                                initialRating: Int(viewModel.filmEntity.rating),
+                                ratingHandler: self.onRatingChange)
+        hostingController?.rootView = filmView
+        navigationItem.title = film.title
         fetchImage()
     }
     
     // MARK: -
     
     private func fetchImage() {
-        guard let film = viewModel?.film.film else {
+        guard let viewModel = viewModel else {
             return
         }
+        let film = viewModel.filmEntity.film
         print("Fetching image - \(film.posterURL)")
-        imageCancellable = ImageCache.shared
+        imageCancellable = ImageDownloader.shared
             .get(url: film.posterURL)
             .receive(on: DispatchQueue.main)
             .sink { image in
-                self.hostingController?.rootView = FilmView(film: film, image: image)
+                self.hostingController?.rootView = FilmView(film: film,
+                                                            image: image,
+                                                            initialRating: Int(viewModel.filmEntity.rating),
+                                                            ratingHandler: self.onRatingChange)
             }
     }
     
     private func setupViews() {
-        hostingController = UIHostingController<FilmView>(rootView: FilmView(film: .default, image: nil))
+        hostingController = UIHostingController<FilmView>(rootView: FilmView(film: .default))
         guard let hostingView = hostingController?.view else {
             return
         }
@@ -68,4 +75,22 @@ class FilmViewController: UIViewController {
         ])
     }
     
+    private func onRatingChange(value: Int) {
+        viewModel?.addRating(value: value)
+    }
+    
+    // MARK: Actions
+    
+    @IBAction func deleteTapped(_ sender: Any) {
+        guard let title = viewModel?.filmEntity.title else {
+            return
+        }
+        let alertController = UIAlertController(title: "Delete film", message: "Are you sure you want to delete \(title)?", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+            self.viewModel?.delete()
+            self.navigationController?.popViewController(animated: true)
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alertController, animated: true, completion: nil)
+    }
 }

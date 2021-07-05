@@ -76,7 +76,7 @@ final class SearchViewModel {
                 guard let response = response else {
                     return nil
                 }
-                return SearchResult(data: response, isAdded: isAdded)
+                return SearchResult(data: response, isAdded: isAdded, hasDisclosure: false)
             }
             .assign(to: \.omdbResponse, on: self)
             .store(in: &cancellables)
@@ -103,7 +103,7 @@ final class SearchViewModel {
         do {
             try dataStore.addFilm(from: response)
             self.favourites = try dataStore.filmsByTitle(containing: searchText)
-            self.omdbResponse = SearchResult(data: response, isAdded: true)
+            self.omdbResponse = SearchResult(data: response, isAdded: true, hasDisclosure: false)
         } catch {
             print("Error adding film - \(error.localizedDescription)")
         }

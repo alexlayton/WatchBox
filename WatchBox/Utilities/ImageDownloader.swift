@@ -13,10 +13,10 @@ class ImageDownloader {
     
     static let shared = ImageDownloader()
     
-    private let internalCache = NSCache<NSString, UIImage>()
+    private let cache = NSCache<NSString, UIImage>()
     
     func get(url urlString: String) -> AnyPublisher<UIImage?, Never> {
-        if let cachedImage = internalCache.object(forKey: urlString as NSString) {
+        if let cachedImage = cache.object(forKey: urlString as NSString) {
             return Just<UIImage?>(cachedImage)
                 .eraseToAnyPublisher()
         }
@@ -33,7 +33,7 @@ class ImageDownloader {
     
                 // Not sure if this is the best place to cache the image...
                 if let image = image {
-                    self.internalCache.setObject(image, forKey: urlString as NSString)
+                    self.cache.setObject(image, forKey: urlString as NSString)
                 }
                 
                 return image

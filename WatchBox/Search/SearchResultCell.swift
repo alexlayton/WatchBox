@@ -59,7 +59,7 @@ class SearchResultCell: UITableViewCell {
         guard let posterURL = searchResult?.data.posterURL else {
             return
         }
-        imageCancellable = ImageCache.shared
+        imageCancellable = ImageDownloader.shared
             .get(url: posterURL)
             .receive(on: DispatchQueue.main)
             .sink { image in
@@ -77,16 +77,19 @@ class SearchResultCell: UITableViewCell {
         if searchResult.isAdded {
             addButton.isEnabled = false
             addButton.isHidden = true
-            accessoryType = .disclosureIndicator
-            selectionStyle = .blue
         } else {
             addButton.isEnabled = true
             addButton.isHidden = false
+        }
+        
+        if searchResult.hasDisclosure {
+            accessoryType = .disclosureIndicator
+            selectionStyle = .blue
+        } else {
             accessoryType = .none
             selectionStyle = .none
         }
 
-        
         fetchImage()
     }
     

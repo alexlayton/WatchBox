@@ -12,8 +12,6 @@ import Combine
 
 class FilmCell: UICollectionViewCell {
     
-    @IBOutlet weak var titleLabel: UILabel!
-    
     static let reuseIdentifier = "FilmCell"
     
     var film: Film? {
@@ -66,7 +64,7 @@ class FilmCell: UICollectionViewCell {
             return
         }
         print("Fetching image - \(film.posterURL)")
-        imageCancellable = ImageCache.shared
+        imageCancellable = ImageDownloader.shared
             .get(url: film.posterURL)
             .receive(on: DispatchQueue.main)
             .sink { image in

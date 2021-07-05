@@ -11,6 +11,7 @@ import UIKit
 struct SearchResult {
     let data: SearchResultRepresentable
     let isAdded: Bool
+    let hasDisclosure: Bool
 }
 
 protocol SearchResultRepresentable {
@@ -24,7 +25,7 @@ extension OMDBResponse: SearchResultRepresentable {
     }
     
     var searchResult: SearchResult {
-        return SearchResult(data: self, isAdded: false)
+        return SearchResult(data: self, isAdded: false, hasDisclosure: false)
     }
 }
 
@@ -32,6 +33,6 @@ extension Film: SearchResultRepresentable {}
 
 extension FilmEntity {
     var searchResult: SearchResult {
-        return SearchResult(data: film, isAdded: true)
+        return SearchResult(data: film, isAdded: true, hasDisclosure: true)
     }
 }

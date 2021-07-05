@@ -7,10 +7,11 @@
         <attribute name="modifiedAt" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="plot" attributeType="String" defaultValueString=""/>
         <attribute name="posterURL" attributeType="String" defaultValueString=""/>
+        <attribute name="rating" attributeType="Integer 16" minValueString="0" maxValueString="5" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String" defaultValueString=""/>
         <attribute name="year" attributeType="String" defaultValueString=""/>
     </entity>
     <elements>
-        <element name="FilmEntity" positionX="-63" positionY="-18" width="128" height="149"/>
+        <element name="FilmEntity" positionX="-63" positionY="-18" width="128" height="164"/>
     </elements>
 </model>

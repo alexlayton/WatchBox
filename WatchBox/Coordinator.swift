@@ -12,6 +12,8 @@ class Coordinator {
     
     // MARK: Properties
     
+    static let seed = false
+    
     let storyboard: UIStoryboard
     
     let navigationController: UINavigationController
@@ -31,7 +33,11 @@ class Coordinator {
             guard error == nil else {
                 fatalError("Failed to load persistent store - \(error!.localizedDescription)")
             }
-//            let _ = try? dataStore.seed()
+            
+            if Self.seed {
+                let _ = try? dataStore.seed()
+            }
+            
             self.presentInitialViewController()
         }
     }
@@ -65,7 +71,7 @@ class Coordinator {
         guard let viewController = storyboard.instantiateViewController(identifier: FilmViewController.storyboardIdentifier) as? FilmViewController else {
             fatalError("Failed to instantiate film view controller")
         }
-        viewController.viewModel = FilmViewModel(film: film)
+        viewController.viewModel = FilmViewModel(film: film, dataStore: dataStore)
         navigationController.pushViewController(viewController, animated: true)
     }
 }

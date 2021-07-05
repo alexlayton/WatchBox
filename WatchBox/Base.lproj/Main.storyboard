@@ -107,7 +107,7 @@
             </objects>
             <point key="canvasLocation" x="511.59420289855075" y="152.67857142857142"/>
         </scene>
-        <!--Film View Controller-->
+        <!--Film-->
         <scene sceneID="RYu-p9-CMh">
             <objects>
                 <viewController storyboardIdentifier="Film" id="sWF-8q-V4N" customClass="FilmViewController" customModule="WatchBox" customModuleProvider="target" sceneMemberID="viewController">
@@ -117,6 +117,13 @@
                         <viewLayoutGuide key="safeArea" id="V96-jw-CHi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Film" id="6kQ-jG-l8r">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="XG2-eC-taW">
+                            <connections>
+                                <action selector="deleteTapped:" destination="sWF-8q-V4N" id="RpP-qf-CuR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y9d-aS-ImW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

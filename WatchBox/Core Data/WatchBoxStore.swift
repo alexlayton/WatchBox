@@ -41,10 +41,27 @@ final class WatchBoxStore: NSPersistentContainer {
         try viewContext.save()
     }
     
+    func delete(film: FilmEntity) throws {
+        viewContext.delete(film)
+        try viewContext.save()
+    }
+    
     func deleteAll() throws {
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: FilmEntity.fetchRequest())
         try viewContext.execute(deleteRequest)
         try viewContext.save()
+    }
+    
+}
+
+// MARK: FilmEntity
+
+extension FilmEntity {
+    
+    func addRating(_ rating: Int) throws {
+        self.rating = Int16(rating)
+        self.modifiedAt = Date()
+        try managedObjectContext?.save()
     }
     
 }

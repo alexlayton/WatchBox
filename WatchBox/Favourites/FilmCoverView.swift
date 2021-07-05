@@ -16,7 +16,7 @@ struct FilmCoverView: View {
     
     var body: some View {
         ZStack {
-            Color.black
+            Color.blue
             if let image = image {
                 Image(uiImage: image)
                     .resizable()
@@ -27,14 +27,6 @@ struct FilmCoverView: View {
             }
         }
         .cornerRadius(10.0)
-    }
-}
-
-extension Film: Identifiable {
-    
-    // TODO: We want to change this to rotten tomatoes id at somepoint
-    var id: String {
-        return title
     }
 }
 
@@ -56,9 +48,9 @@ struct FilmCoverView_Previews: PreviewProvider {
     }
     
     static var previews: some View {
-        Group {
+        HStack {
             FilmCoverView(film: films[0].0, image: films[0].1)
-                .frame(width: 200, height: 300)
+                .frame(width: 128, height: 192)
             FilmCoverView(film: films[1].0, image: films[1].1)
                 .frame(width: 128, height: 192)
             FilmCoverView(film: films[2].0, image: films[2].1)
