@@ -52,11 +52,14 @@ final class SearchViewModel {
         let apiRequest = debouncedSearchText
             .filter { $0 != "" }
             .map { TitleRequest(title: $0) }
-            .flatMap { self.provider.titleSearch(request: $0) }
-            .map { Optional($0) }
-            .catch { error -> Just<OMDBResponse?> in
-                print("Error fetching from API - \(error.localizedDescription)")
-                return Just(nil)
+            .flatMap {
+                // Nest the catch block here to prevent the whole subscriber finishing on error
+                self.provider.titleSearch(request: $0)
+                    .map { Optional($0) }
+                    .catch { error -> Just<OMDBResponse?> in
+                        print("Error fetching from API - \(error.localizedDescription)")
+                        return Just(nil)
+                    }
             }
             .share()
         
